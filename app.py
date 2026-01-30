@@ -40,15 +40,17 @@ load_dotenv()                             # à ajouter
 
 def get_db():
     if 'db' not in g:
-        g.db =  pymysql.connect(
-            host=os.environ.get("serveurmysql.iut-bm.univ-fcomte.fr"),                # à modifier
-            user=os.environ.get("educret"),               # à modifier
-            password=os.environ.get("secret"),        # à modifier
-            database=os.environ.get("BDD_educret_sae"),        # à modifier
-            charset='utf8mb4',
+        g.db = pymysql.connect(
+            host=os.environ.get("MYSQLHOST"),
+            user=os.environ.get("MYSQLUSER"),
+            password=os.environ.get("MYSQLPASSWORD"),
+            database=os.environ.get("MYSQLDATABASE"),
+            port=int(os.environ.get("MYSQLPORT", 3306)),
+            charset="utf8mb4",
             cursorclass=pymysql.cursors.DictCursor
         )
     return g.db
+
 
 @app.teardown_appcontext
 def teardown_db(exception):
